@@ -17,11 +17,12 @@ def caesar_cipher(string, number)
     p arr.join("")
 end
 
+#Courtesy of https://github.com/j-campbell
 print "What should be ciphered? "
-message_in = gets.chomp
+user_string = gets.chomp
 
 print "What is the shift? "
-key_in = gets.chomp.to_i
+user_number = gets.chomp.to_i
 
 print "Encrypted Message: "
-caesar_cipher(message_in, key_in)
+caesar_cipher(user_string, user_number)
