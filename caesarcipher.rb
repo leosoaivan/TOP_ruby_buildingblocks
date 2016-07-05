@@ -1,15 +1,13 @@
 def caesar_cipher(string, number)
-    alphabet = ('a'..'z').to_a
-    capital = ('A'..'Z').to_a
-
     arr = []
     string.each_char do |c|
+        shift = c.ord + number
         if c.match(/[a-z]/)
-            shift = alphabet.index(c).to_i + number
-            arr << alphabet[shift % 26]
+            if shift < 122 ? arr << shift.chr : arr << (shift - 26).chr
+            end
         elsif c.match(/[A-Z]/)
-            shift = capital.index(c).to_i + number
-            arr << capital[shift % 26]
+            if shift < 90 ? arr << shift.chr : arr << (shift - 26).chr
+            end
         else
             arr << c
         end
