@@ -24,7 +24,7 @@ module Enumerable
             ary
         elsif self.is_a? Hash
             hsh = {}
-            self.my_each { |k, v| hsh[k] = v if yield (k, v) }
+            self.my_each { |k, v| hsh[k] = v if yield }
             hsh
         end
     end
@@ -106,11 +106,11 @@ module Enumerable
         if (proc || block_given?)
             self.my_each do |i|
                 new_ary << ( proc ? proc.call(i) : yield(i) )
-                end
-                    else return enum_for(:my_map2)
-                    end
-                return new_ary
             end
+        else return enum_for(:my_map2)
+        end
+        return new_ary
+    end
 
 end
 
