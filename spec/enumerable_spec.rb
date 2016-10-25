@@ -100,6 +100,19 @@ describe Enumerable do
         expect { "This is a string.".my_any? }.to raise_error(StandardError)
       end
     end
+    context "given a block" do
+      it "returns true if the block ever evaluates true" do
+        expect(["ant", "bear", "catastrophe"].my_any? { |a| a.length >= 7 }).to eql(true)
+      end
+      it "returns false if the block never evaluates true" do
+        expect(["ant", "bear", "cat"].my_any? { |a| a.length >= 7 }).to eql(false)
+      end
+    end
+    context "given no block" do
+      it "adds an implicit block of { |obj| obj } and evaluates" do
+        expect([nil, true, 99].my_any?).to eql(true)
+      end
+    end
   end
 
 end
