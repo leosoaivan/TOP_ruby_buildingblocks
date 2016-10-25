@@ -57,7 +57,7 @@ module Enumerable
         status = TRUE
         self.my_each do |i|
             if not block_given?
-                status = FALSE unless (i != TRUE && (i == FALSE || i == NIL))
+                status = FALSE if i == TRUE
             else
                 status = FALSE if yield(i)
             end

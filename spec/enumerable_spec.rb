@@ -115,4 +115,24 @@ describe Enumerable do
     end
   end
 
+  describe "#my_none?" do
+    context "when called on non-Enumerable objects" do
+      it "returns NoMethodError" do
+        expect { "This is a string.".my_none? }.to raise_error(StandardError)
+      end
+    end
+    context "given a block" do
+      it "returns true if the block never evaluates true" do
+        expect(["ant", "bear", "cat"].my_none? { |a| a.length == 5 }).to eql(true)
+      end
+      it "returns false if the block ever evaluates true" do
+        expect(["ant", "bear", "cat"].my_none? { |a| a.length >= 4 }).to eql(false)
+      end
+    end
+    context "given no block" do
+      it "returns true if no item in the collection is true" do
+        expect([nil, false, true].my_none?).to eql(false)
+      end
+    end
+end
 end
