@@ -1,19 +1,62 @@
-def stockpicker(array)
-    best_days = []
-    highest_profit = 0
-    array.each do |a|
-        array[array.index(a)..-1].each do |b|
-            possible_profit = b - a
-            if possible_profit > highest_profit
-                highest_profit = possible_profit
-                best_days = [array.index(a), array.index(b)]
-            end
+class StockAnalyzer
+  attr_reader :stocks, :max_profit, :best_index
+  attr_writer :max_profit
+  
+  def initialize(stocks)
+    @stocks = stocks
+    @max_profit = 0
+    @best_index = { buy: 0, sell: 0 }
+  end
+  
+  def results
+    analyze
+    output_message
+  end
+
+  private
+
+  def analyze
+    stocks.each_with_index do |buy_price, buy_ind|
+      stocks.each_with_index do |sell_price, sell_ind|
+        profit = sell_price - buy_price
+        if profit > self.max_profit && sell_ind > buy_ind
+          self.max_profit = profit
+          set_best_index(buy_ind, sell_ind)
         end
+      end
     end
-    puts "Buy on day #{best_days[0]} at $#{array[best_days[0]]} and sell on day #{best_days[1]} at $#{array[best_days[1]]} for maximum profit of $#{highest_profit}."
+  end
+
+  def set_best_index(buy, sell)
+    best_index[:buy] = buy
+    best_index[:sell] = sell
+  end
+
+  def output_message
+    puts "The best day to buy is day #{best_index[:buy] + 1}, and"
+    puts "The best day to sell is day #{best_index[:sell] + 1}."
+  end
 end
 
-puts "Please enter stock price in chronological order, separated by a comma:"
-array = gets.chomp.split(",").map{|price| price.to_i}
+class StockSanitizer
+  attr_reader :stocks
 
-puts stockpicker(array)
+  def initialize(stocks)
+    @stocks = stocks
+  end
+  
+  def sanitize
+    stocks.gsub(/[^0-9\s]/, "").split(" ").map! { |x| x.to_i }
+  end
+end
+
+def script
+  print "Enter stock prices in chronological order: "
+  stocks = gets.chomp
+
+  sanitized_stocks = StockSanitizer.new(stocks).sanitize
+
+  StockAnalyzer.new(sanitized_stocks).results
+end
+
+script
