@@ -19,7 +19,7 @@ describe StockAnalyzer do
     end
   end
 
-# Private methods[17]
+# Private methods
 
   # describe '#analyze' do 
   #   it 'returns a pair of index with the best day to buy/sell' do 

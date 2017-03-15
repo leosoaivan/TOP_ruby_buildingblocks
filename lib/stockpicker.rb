@@ -15,27 +15,27 @@ class StockAnalyzer
 
   private
 
-  def analyze
-    stocks.each_with_index do |buy_price, buy_ind|
-      stocks.each_with_index do |sell_price, sell_ind|
-        profit = sell_price - buy_price
-        if profit > self.max_profit && sell_ind > buy_ind
-          self.max_profit = profit
-          set_best_index(buy_ind, sell_ind)
+    def analyze
+      stocks.each_with_index do |buy_price, buy_ind|
+        stocks.each_with_index do |sell_price, sell_ind|
+          profit = sell_price - buy_price
+          if profit > self.max_profit && sell_ind > buy_ind
+            self.max_profit = profit
+            set_best_index(buy_ind, sell_ind)
+          end
         end
       end
     end
-  end
 
-  def set_best_index(buy, sell)
-    best_index[:buy] = buy
-    best_index[:sell] = sell
-  end
+    def set_best_index(buy, sell)
+      best_index[:buy] = buy
+      best_index[:sell] = sell
+    end
 
-  def output_message
-    puts "The best day to buy is day #{best_index[:buy] + 1}, and"
-    puts "The best day to sell is day #{best_index[:sell] + 1}."
-  end
+    def output_message
+      puts "The best day to buy is day #{best_index[:buy] + 1}, and"
+      puts "The best day to sell is day #{best_index[:sell] + 1}."
+    end
 end
 
 class StockSanitizer
